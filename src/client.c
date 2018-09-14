@@ -1,14 +1,11 @@
 #include <base.h>
-// Constants
-#define ARG_AMOUNT 4
-#define OPERATION_MAX_SIZE 2 // Characters
-#define FILEPATH_MAX_SIZE 256  // Characters
-#define SERVER_IP_MAX_SIZE 15 // Characters
+#include <client.h>
 
 void validate_argc(int argc) {
-  if (argc != ARG_AMOUNT)
-  {
+  if (argc < ARG_AMOUNT) {
     error("Insufficient arguments!");
+  } else if (argc > ARG_AMOUNT) {
+    error("Too many arguments!");
   }
 }
 
@@ -35,9 +32,7 @@ int main(int argc, char **argv) {
   strcpy(server_ip, argv[3]);
 
   int operation = get_operation(argv_operation);
-
-  // Handle operation
-  switch(operation) {
+  switch(operation) { // Handle operation
     case ENV:
       printf("env\n");
       break;

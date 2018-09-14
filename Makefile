@@ -5,9 +5,13 @@ OBJFOLDER := obj/
 
 CC := gcc
 CFLAGS := -Wall
-SRCFILES := $(wildcard src/*.c)
+SERVERSRCFILES := $(wildcard src/base.c src/server.c)
+CLIENTSRCFILES := $(wildcard src/base.c src/client.c)
 
-all: $(SRCFILES:src/%.c=obj/%.o)
+server: $(SERVERSRCFILES:src/%.c=obj/%.o)
+	$(CC) $(CFLAGS) obj/*.o -o bin/binary
+
+client: $(CLIENTSRCFILES:src/%.c=obj/%.o)
 	$(CC) $(CFLAGS) obj/*.o -o bin/binary
 
 obj/%.o: src/%.c
@@ -17,9 +21,7 @@ obj/%.o: src/%.c
 clean:
 	rm -rf obj/*
 	rm -rf bin/*
-	rm -rf doc/*.txt
 	rm -rf *.o
-	rm -f *.txt
 
 run:
 	bin/binary
