@@ -46,13 +46,13 @@ int main(int argc, char **argv) {
       error("Invalid Operation!");
   }
 
-  // Opening file
-  FILE *file;
-  file = fopen(file_path, "r");
+  // // Opening file
+  // FILE *file;
+  // file = fopen(file_path, "r");
 
-  if (file == NULL) {
-    error("File could not be opened!");
-  }
+  // if (file == NULL) {
+  //   error("File could not be opened!");
+  // }
     
   return 0;
 }
