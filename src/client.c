@@ -1,22 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define TRUE 1
-#define FALSE 0
+#include <base.h>
+// Constants
 #define ARG_AMOUNT 4
 #define OPERATION_MAX_SIZE 2 // Characters
 #define FILEPATH_MAX_SIZE 256  // Characters
 #define SERVER_IP_MAX_SIZE 15 // Characters
-#define ENV 1
-#define REC 2
-#define CAL 3
-#define ERROR -1
-
-void error (char *msg) {
-  printf("ERROR: %s\n", msg);
-
-  exit(-1);
-}
 
 void validate_argc(int argc) {
   if (argc != ARG_AMOUNT)
@@ -49,6 +36,7 @@ int main(int argc, char **argv) {
 
   int operation = get_operation(argv_operation);
 
+  // Handle operation
   switch(operation) {
     case ENV:
       printf("env\n");
@@ -63,7 +51,13 @@ int main(int argc, char **argv) {
       error("Invalid Operation!");
   }
 
-  //Abrir arquivo
-  //Abrir arquivo
+  // Opening file
+  FILE *file;
+  file = fopen(file_path, "r");
+
+  if (file == NULL) {
+    error("File could not be opened!");
+  }
+    
   return 0;
 }
