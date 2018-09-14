@@ -12,12 +12,16 @@
 #define CAL 3
 #define ERROR -1
 
+void error (char *msg) {
+  printf("ERROR: %s\n", msg);
+
+  exit(-1);
+}
+
 void validate_argc(int argc) {
   if (argc != ARG_AMOUNT)
   {
-    printf("ERROR: Insufficient arguments!\n");
-
-    exit(-1);
+    error("Insufficient arguments!");
   }
 }
 
@@ -56,7 +60,7 @@ int main(int argc, char **argv) {
       printf("cal\n");
       break;
     default:
-      printf("ERROR: Invalid Operation!\n");
+      error("Invalid Operation!");
   }
 
   //Abrir arquivo
