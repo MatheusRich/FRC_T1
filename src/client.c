@@ -1,5 +1,11 @@
 #include <base.h>
 #include <client.h>
+#include <arpa/inet.h>
+#include <fcntl.h>
+
+#define SERV_PORT 6100
+#define MAXLINE 1024
+#define END_FLAG "END"
 
 void validate_argc(int argc) {
   if (argc < ARG_AMOUNT) {
@@ -31,10 +37,28 @@ int main(int argc, char **argv) {
   strcpy(file_path, argv[2]);
   strcpy(server_ip, argv[3]);
 
+  int sockfd, n, file;
+  struct sockaddr_in serveraddr;
+  char buf[MAXLINE];
+
+  bzero(&serveraddr, sizeof(serveraddr));
+  serveraddr.sin_family = AF_INET;
+  serveraddr.sin_port = htons(SERV_PORT);
+  inet_pton(AF_INET, argv[1], &serveraddr.sin_addr);
+
+  sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+ 
+
   int operation = get_operation(argv_operation);
   switch(operation) { // Handle operation
     case ENV:
-      printf("env\n");
+      file = open(file_path, O_RDONLY);
+      printf();
+      while ((n = read(file, buf, MAXLINE)) > 0) {
+        sendto(sockfd, buf, n, 0, (struct sockaddr *) &serveraddr, sizeof(serveraddr));
+      }
+      sendto(sockfd, END_FLAG, strlen(END_FLAG), 0, (struct sockaddr *) &serveraddr, sizeof(serveraddr));
+      close(file);
       break;
     case REC:
       printf("rec\n");
